@@ -1,0 +1,215 @@
+# Advanced JavaScript Assignment Website
+
+This project demonstrates advanced JavaScript features including WeakMap, Type Guards, Proxy with Reflect, Set, Symbol, Generators, and Iterators.
+
+## Features
+
+### Contact Form (`contact-assignment-complete.js`)
+- **WeakMap**: Used for storing private form validation metadata
+- **Type Guards**: Ensures type safety for form and input elements
+- **Proxy with Reflect**: Logs property access and modifications for debugging
+- **Form Validation**: Advanced validation with custom error handling
+
+### Admin Module (`admin.js`)
+- Quiz question management functionality
+- Dynamic DOM manipulation
+- Data persistence and retrieval
+
+### Filter Module (`filter.js`)
+- RxJS-based search functionality
+- Debounced input handling
+- Real-time table row filtering
+
+### Quiz Module (`quizquestions.js`)
+- Dynamic quiz rendering
+- Interactive question interface
+- Multiple choice handling
+
+## API Documentation
+
+The complete API documentation is generated using JSDoc and can be found in the `docs/` directory.
+
+## Installation
+
+```bash
+npm install
+```
+
+## Testing
+
+This project includes comprehensive test coverage for all JavaScript modules and features.
+
+### Quick Test Commands
+
+```bash
+# Run all tests
+npm test
+
+# Run tests with coverage report
+npm run test:coverage
+
+# Run tests in watch mode (for development)
+npm run test:watch
+
+# Run tests with verbose output
+npm run test:verbose
+```
+
+### Test Runner Script
+
+Use the included test runner for more control:
+
+```bash
+# Run all tests
+./run-tests.sh
+
+# Run specific test suites
+./run-tests.sh contact    # Contact form tests
+./run-tests.sh admin      # Admin panel tests
+./run-tests.sh quiz       # Quiz system tests
+./run-tests.sh filter     # RxJS filter tests
+./run-tests.sh utils      # Utility function tests
+./run-tests.sh integration # Integration tests
+
+# Generate coverage report
+./run-tests.sh coverage
+
+# Watch mode for development
+./run-tests.sh watch
+```
+
+### Test Coverage
+
+The test suite covers:
+
+- **Contact Form Tests** (`tests/contact-form.test.js`)
+  - WeakMap functionality and metadata storage
+  - Type guards for form and input validation
+  - Proxy with Reflect for property access logging
+  - Form validation rules and error handling
+  - Integration between all advanced features
+
+- **Admin Panel Tests** (`tests/admin.test.js`)
+  - Dynamic DOM generation for quiz questions
+  - CRUD operations (Create, Read, Update, Delete)
+  - Real-time data binding and form updates
+  - Question validation and data integrity
+  - JSON serialization and persistence
+
+- **Quiz System Tests** (`tests/quiz.test.js`)
+  - Quiz data loading from JSON files
+  - Dynamic question rendering
+  - Answer collection and user interaction
+  - Score calculation and results display
+  - Error handling for network failures
+
+- **RxJS Filter Tests** (`tests/filter.test.js`)
+  - Reactive programming patterns
+  - Observable streams and operators
+  - Debounced search functionality
+  - Table row filtering and DOM manipulation
+  - Performance with large datasets
+
+- **Utility Tests** (`tests/utils.test.js`)
+  - Type validation and interfaces
+  - Form validation utilities
+  - DOM manipulation helpers
+  - Array and object utilities
+  - Error handling patterns
+
+- **Integration Tests** (`tests/integration.test.js`)
+  - Cross-module functionality
+  - End-to-end workflows
+  - Error scenario handling
+  - Performance and memory tests
+  - Accessibility compliance
+
+### Test Configuration
+
+The project uses Jest with the following configuration:
+
+- **Environment**: jsdom (for DOM testing)
+- **Setup**: Automatic mocking of globals and APIs
+- **Coverage**: Comprehensive coverage reporting
+- **Timeout**: 10 seconds for async operations
+
+## Generate Documentation
+
+```bash
+npm run docs
+```
+
+## Serve Documentation
+
+```bash
+npm run docs:serve
+```
+
+## Build and Serve (Combined)
+
+```bash
+npm run build-docs
+```
+
+## Project Structure
+
+```
+├── index.html                     # Main entry point
+├── contact-assignment-complete.html # Contact form page
+├── contact-assignment-complete.js  # WeakMap, Type Guards, Proxy implementation
+├── admin.html                     # Admin panel page  
+├── admin.js                       # Admin module for quiz management
+├── quiz.html                      # Quiz page
+├── quizquestions.js               # Quiz display module
+├── filter.html                    # Filter page
+├── filter.js                      # RxJS-based filtering
+├── quiz-data.json                 # Shared quiz data
+├── package.json                   # Node.js dependencies
+├── jsdoc.json                     # JSDoc configuration
+├── jest.config.json               # Jest testing configuration
+├── run-tests.sh                   # Test runner script
+├── tests/                         # Test directory
+│   ├── setup.js                   # Jest setup and mocks
+│   ├── contact-form.test.js        # Contact form tests
+│   ├── admin.test.js              # Admin panel tests
+│   ├── quiz.test.js               # Quiz system tests
+│   ├── filter.test.js             # RxJS filter tests
+│   ├── utils.test.js              # Utility function tests
+│   └── integration.test.js        # Integration tests
+└── docs/                          # Generated documentation
+```
+
+## Testing Architecture
+
+### Test Framework: Jest with jsdom
+
+The testing setup uses Jest as the primary testing framework with jsdom for DOM manipulation testing. This allows us to test browser-specific functionality in a Node.js environment.
+
+### Key Testing Features:
+
+1. **Comprehensive Mocking**
+   - Global objects (fetch, localStorage, console)
+   - Browser APIs (matchMedia, location)
+   - Event handling and DOM interactions
+
+2. **Modular Test Structure**
+   - Each JavaScript module has dedicated test files
+   - Utilities and integration tests for cross-cutting concerns
+   - Setup file for consistent test environment
+
+3. **Advanced JavaScript Feature Testing**
+   - WeakMap private data storage testing
+   - Type guard function validation
+   - Proxy/Reflect operation interception testing
+   - RxJS observable and operator testing
+
+4. **Real-world Scenario Testing**
+   - Form validation workflows
+   - Dynamic DOM generation and manipulation
+   - Error handling and edge cases
+   - Performance and memory management
+
+5. **Coverage Reporting**
+   - Line, function, and branch coverage
+   - HTML and console output formats
+   - Integration with development workflow

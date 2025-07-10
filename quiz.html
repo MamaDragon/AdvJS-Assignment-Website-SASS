@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz - Advanced JavaScript</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+        }
+        .quiz-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .question-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: #f8f9fa;
+        }
+        .form-check {
+            margin: 0.5rem 0;
+        }
+        .submit-section {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .features-demo {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="btn btn-outline-secondary back-link">← Back to Home</a>
+    
+    <div class="container">
+        <div class="quiz-header text-center">
+            <h1>📚 Interactive Quiz System</h1>
+            <p class="mb-0">Demonstrating dynamic DOM manipulation and module patterns</p>
+        </div>
+
+        <div class="alert alert-info">
+            <h5>🎯 JavaScript Features Demonstrated:</h5>
+            <ul class="mb-0">
+                <li><strong>Dynamic DOM Creation:</strong> Questions and options generated programmatically</li>
+                <li><strong>Event Handling:</strong> Form submission and validation</li>
+                <li><strong>Module Pattern:</strong> Organized code structure</li>
+                <li><strong>API Integration:</strong> Loading quiz data from endpoints</li>
+            </ul>
+        </div>
+
+        <!-- Quiz will be dynamically loaded here -->
+        <div id="quiz"></div>
+
+        <div class="submit-section">
+            <button id="submit-quiz" class="btn btn-success btn-lg" style="display: none;">
+                Submit Quiz
+            </button>
+        </div>
+
+        <!-- Results area -->
+        <div id="quiz-results"></div>
+
+        <div class="features-demo">
+            <h5>Code Architecture:</h5>
+            <ul>
+                <li><strong>QuizModule:</strong> Namespace pattern for organization</li>
+                <li><strong>Dynamic Rendering:</strong> Questions built from JSON data</li>
+                <li><strong>Event Delegation:</strong> Efficient event handling</li>
+                <li><strong>State Management:</strong> Tracking user responses</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="quizquestions.js"></script>
+    <script>
+        // Quiz functionality that loads from quiz-data.json
+        let quizData = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const submitBtn = document.getElementById('submit-quiz');
+            const resultsDiv = document.getElementById('quiz-results');
+            const quizContainer = document.getElementById('quiz');
+
+            // Load quiz data from JSON file
+            try {
+                const response = await fetch('./quiz-data.json');
+                quizData = await response.json();
+                renderQuiz(quizData);
+                submitBtn.style.display = 'block';
+            } catch (error) {
+                console.error('Error loading quiz data:', error);
+                quizContainer.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5>Unable to load quiz questions</h5>
+                        <p>Please make sure the server is running and quiz-data.json is available.</p>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+
+            // Render quiz questions
+            function renderQuiz(data) {
+                quizContainer.innerHTML = '';
+                
+                data.forEach((q, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.classList.add('question-card');
+                    
+                    const questionTitle = document.createElement('h5');
+                    questionTitle.textContent = `${index + 1}. ${q.question}`;
+                    questionDiv.appendChild(questionTitle);
+                    
+                    q.choices.forEach((choice, choiceIndex) => {
+                        const wrapper = document.createElement('div');
+                        wrapper.classList.add('form-check');
+                        
+                        const input = document.createElement('input');
+                        input.type = 'radio';
+                        input.name = `question-${index}`;
+                        input.value = choice;
+                        input.classList.add('form-check-input');
+                        input.id = `q${index}-${choiceIndex}`;
+                        
+                        const label = document.createElement('label');
+                        label.classList.add('form-check-label');
+                        label.setAttribute('for', input.id);
+                        label.textContent = choice;
+                        
+                        wrapper.appendChild(input);
+                        wrapper.appendChild(label);
+                        questionDiv.appendChild(wrapper);
+                    });
+                    
+                    quizContainer.appendChild(questionDiv);
+                });
+            }
+
+            // Handle quiz submission
+            submitBtn.addEventListener('click', () => {
+                const questions = document.querySelectorAll('.question-card');
+                let answers = [];
+                let score = 0;
+
+                questions.forEach((question, index) => {
+                    const selectedOption = question.querySelector('input[type="radio"]:checked');
+                    if (selectedOption) {
+                        const isCorrect = selectedOption.value === quizData[index].correctAnswer;
+                        if (isCorrect) score++;
+                        
+                        answers.push({
+                            question: index + 1,
+                            questionText: quizData[index].question,
+                            selected: selectedOption.value,
+                            correct: quizData[index].correctAnswer,
+                            isCorrect: isCorrect
+                        });
+                    }
+                });
+
+                // Display results with scoring
+                const percentage = Math.round((score / quizData.length) * 100);
+                let scoreClass = 'success';
+                if (percentage < 60) scoreClass = 'danger';
+                else if (percentage < 80) scoreClass = 'warning';
+
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-${scoreClass}">
+                        <h4>Quiz Completed! 🎉</h4>
+                        <p><strong>Score: ${score}/${quizData.length} (${percentage}%)</strong></p>
+                        <p>You answered ${answers.length} out of ${questions.length} questions.</p>
+                        <details>
+                            <summary>View Detailed Results</summary>
+                            <div class="mt-3">
+                                ${answers.map((answer, i) => `
+                                    <div class="mb-2 p-2 border rounded ${answer.isCorrect ? 'border-success bg-light' : 'border-danger bg-light'}">
+                                        <strong>Q${answer.question}:</strong> ${answer.questionText}<br>
+                                        <span class="${answer.isCorrect ? 'text-success' : 'text-danger'}">
+                                            Your answer: ${answer.selected}
+                                        </span><br>
+                                        ${!answer.isCorrect ? `<span class="text-success">Correct answer: ${answer.correct}</span>` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </details>
+                    </div>
+                `;
+
+                submitBtn.style.display = 'none';
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>

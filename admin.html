@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Quiz Management</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+        .admin-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .admin-controls {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .question-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: box-shadow 0.2s;
+        }
+        .question-item:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .form-control {
+            margin-bottom: 0.5rem;
+        }
+        .btn-group {
+            margin-top: 1rem;
+        }
+        .features-demo {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="btn btn-outline-secondary back-link">← Back to Home</a>
+    
+    <div class="container">
+        <div class="admin-header text-center">
+            <h1>⚙️ Quiz Administration Panel</h1>
+            <p class="mb-0">Manage quiz questions with dynamic form generation</p>
+        </div>
+
+        <div class="alert alert-warning">
+            <h5>🔧 JavaScript Features Demonstrated:</h5>
+            <ul class="mb-0">
+                <li><strong>Dynamic Form Generation:</strong> Questions and inputs created programmatically</li>
+                <li><strong>Real-time Data Binding:</strong> Live updates as you type</li>
+                <li><strong>Array Manipulation:</strong> Add, edit, and remove questions</li>
+                <li><strong>State Management:</strong> Persistent data handling</li>
+            </ul>
+        </div>
+
+        <div class="alert alert-info">
+            <h5>📝 How to Update Quiz Questions:</h5>
+            <ol class="mb-0">
+                <li>Edit questions in the form below</li>
+                <li>Click "💾 Save All Changes" to generate the JSON data</li>
+                <li>Copy the generated JSON from the details section</li>
+                <li>Replace the content in <code>quiz-data.json</code> file</li>
+                <li>Refresh the quiz page to see your changes!</li>
+            </ol>
+        </div>
+
+        <div class="admin-controls">
+            <h4>Admin Controls</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <button id="add-question" class="btn btn-success me-2">
+                        ➕ Add New Question
+                    </button>
+                    <button id="save-all" class="btn btn-primary me-2">
+                        💾 Save All Changes
+                    </button>
+                </div>
+                <div class="col-md-6 text-end">
+                    <span class="badge bg-info fs-6">
+                        Questions: <span id="question-count">Loading...</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz administration area -->
+        <div id="quiz-admin-list">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Loading quiz questions...</p>
+            </div>
+        </div>
+
+        <!-- Status messages -->
+        <div id="admin-messages"></div>
+
+        <div class="features-demo">
+            <h5>Admin Module Architecture:</h5>
+            <ul>
+                <li><strong>AdminModule:</strong> Namespace encapsulation</li>
+                <li><strong>Dynamic DOM:</strong> Forms generated from data</li>
+                <li><strong>Event Binding:</strong> Real-time input handling</li>
+                <li><strong>Data Persistence:</strong> Local storage and API calls</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+    <script>
+        // Admin functionality that connects to quiz data
+        let quizData = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const addQuestionBtn = document.getElementById('add-question');
+            const saveAllBtn = document.getElementById('save-all');
+            const messagesDiv = document.getElementById('admin-messages');
+            const questionCount = document.getElementById('question-count');
+
+            // Load quiz data from JSON file
+            try {
+                const response = await fetch('./quiz-data.json');
+                quizData = await response.json();
+                renderQuestions();
+            } catch (error) {
+                console.error('Error loading quiz data:', error);
+                // Fallback to mock data
+                loadMockData();
+                renderQuestions();
+            }
+
+            function renderQuestions() {
+                const listDiv = document.getElementById('quiz-admin-list');
+                listDiv.innerHTML = '';
+                
+                quizData.forEach((q, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'question-item';
+                    div.dataset.questionId = q.id || index;
+                    
+                    div.innerHTML = `
+                        <h6>Question ${index + 1} ${q.id ? `(ID: ${q.id})` : '(New)'}</h6>
+                        <input type="text" class="form-control question-input" value="${q.question}" placeholder="Question text" data-field="question">
+                        <input type="text" class="form-control choices-input" value="${q.choices.join(', ')}" placeholder="Choices (comma separated)" data-field="choices">
+                        <input type="text" class="form-control answer-input" value="${q.correctAnswer}" placeholder="Correct answer" data-field="correctAnswer">
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteQuestion(${index})">
+                                🗑️ Delete
+                            </button>
+                            <button class="btn btn-sm btn-outline-info" onclick="previewQuestion(${index})">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Add real-time editing
+                    const inputs = div.querySelectorAll('input');
+                    inputs.forEach(input => {
+                        input.addEventListener('input', () => updateQuestion(index, input));
+                    });
+                    
+                    listDiv.appendChild(div);
+                });
+                
+                questionCount.textContent = quizData.length;
+            }
+
+            function updateQuestion(index, input) {
+                const field = input.dataset.field;
+                const value = input.value;
+                
+                if (field === 'choices') {
+                    quizData[index][field] = value.split(',').map(c => c.trim()).filter(c => c);
+                } else {
+                    quizData[index][field] = value;
+                }
+            }
+
+            function loadMockData() {
+                quizData = [
+                    {
+                        id: 1,
+                        question: "What is a WeakMap in JavaScript?",
+                        choices: ["A type of array", "A collection of key-value pairs with object keys", "A string method", "A loop construct"],
+                        correctAnswer: "A collection of key-value pairs with object keys"
+                    },
+                    {
+                        id: 2,
+                        question: "Which operator is used for type checking in JavaScript?",
+                        choices: ["typeof", "instanceof", "===", "All of the above"],
+                        correctAnswer: "All of the above"
+                    },
+                    {
+                        id: 3,
+                        question: "What does a Proxy object do in JavaScript?",
+                        choices: ["Creates a copy of an object", "Intercepts and customizes operations on objects", "Deletes objects from memory", "Validates data types"],
+                        correctAnswer: "Intercepts and customizes operations on objects"
+                    }
+                ];
+            }
+
+            // Add question functionality
+            addQuestionBtn.addEventListener('click', () => {
+                const newQuestion = {
+                    id: Date.now(), // Simple ID generation
+                    question: "",
+                    choices: ["", "", "", ""],
+                    correctAnswer: ""
+                };
+                
+                quizData.push(newQuestion);
+                renderQuestions();
+                
+                // Scroll to new question
+                const questionItems = document.querySelectorAll('.question-item');
+                const lastItem = questionItems[questionItems.length - 1];
+                lastItem.scrollIntoView({ behavior: 'smooth' });
+                
+                // Focus on the question input
+                lastItem.querySelector('.question-input').focus();
+            });
+
+            // Save all functionality
+            saveAllBtn.addEventListener('click', async () => {
+                try {
+                    // In a real application, this would send data to a server
+                    // For this demo, we'll simulate saving and show the data
+                    const jsonData = JSON.stringify(quizData, null, 2);
+                    
+                    messagesDiv.innerHTML = `
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>✅ Saved!</strong> Quiz data has been updated successfully.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            <details class="mt-2">
+                                <summary>View saved data (copy this to quiz-data.json)</summary>
+                                <pre class="mt-2 p-2 bg-light border rounded" style="font-size: 0.8rem; max-height: 200px; overflow-y: auto;">${jsonData}</pre>
+                            </details>
+                        </div>
+                    `;
+                    
+                    // Also try to update localStorage for persistence
+                    localStorage.setItem('quizData', jsonData);
+                    
+                } catch (error) {
+                    messagesDiv.innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>❌ Error!</strong> Failed to save quiz data: ${error.message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    `;
+                }
+                
+                setTimeout(() => {
+                    messagesDiv.innerHTML = '';
+                }, 5000);
+            });
+
+            // Global functions for inline event handlers
+            window.deleteQuestion = function(index) {
+                if (confirm('Are you sure you want to delete this question?')) {
+                    quizData.splice(index, 1);
+                    renderQuestions();
+                }
+            };
+
+            window.previewQuestion = function(index) {
+                const q = quizData[index];
+                messagesDiv.innerHTML = `
+                    <div class="alert alert-info">
+                        <h5>Preview Question ${index + 1}</h5>
+                        <p><strong>Q:</strong> ${q.question || 'No question text'}</p>
+                        <p><strong>Choices:</strong> ${q.choices.join(' | ') || 'No choices'}</p>
+                        <p><strong>Correct Answer:</strong> ${q.correctAnswer || 'No correct answer set'}</p>
+                    </div>
+                `;
+            };
+        });
+    </script>
+</body>
+</html>

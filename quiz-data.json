@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "question": "What is a WeakMap in JavaScript?",
+    "choices": ["A type of array", "A collection of key-value pairs with object keys", "A string method", "A loop construct"],
+    "correctAnswer": "A collection of key-value pairs with object keys"
+  },
+  {
+    "id": 2,
+    "question": "Which operator is used for type checking in JavaScript?",
+    "choices": ["typeof", "instanceof", "===", "All of the above"],
+    "correctAnswer": "All of the above"
+  },
+  {
+    "id": 3,
+    "question": "What does a Proxy object do in JavaScript?",
+    "choices": ["Creates a copy of an object", "Intercepts and customizes operations on objects", "Deletes objects from memory", "Validates data types"],
+    "correctAnswer": "Intercepts and customizes operations on objects"
+  },
+  {
+    "id": 4,
+    "question": "What is the purpose of Reflect in JavaScript?",
+    "choices": ["To create mirrors", "To provide methods for interceptable operations", "To reverse strings", "To copy objects"],
+    "correctAnswer": "To provide methods for interceptable operations"
+  },
+  {
+    "id": 5,
+    "question": "What makes a Set different from an Array?",
+    "choices": ["Sets are faster", "Sets only store unique values", "Sets are immutable", "Sets can't store objects"],
+    "correctAnswer": "Sets only store unique values"
+  }
+]

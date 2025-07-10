@@ -1,0 +1,29 @@
+{
+  "source": {
+    "include": [
+      "./",
+      "./README.md"
+    ],
+    "includePattern": "\\.(js|jsx)$",
+    "exclude": [
+      "node_modules/",
+      "docs/"
+    ]
+  },
+  "opts": {
+    "destination": "./docs/",
+    "recurse": true,
+    "readme": "./README.md"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "metadata": {
+    "title": "Advanced JavaScript Assignment Documentation",
+    "description": "API documentation for Advanced JavaScript features implementation"
+  }
+}

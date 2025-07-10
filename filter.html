@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RxJS Filter Demo - Advanced JavaScript</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- RxJS CDN -->
+    <script src="https://unpkg.com/rxjs@7/dist/bundles/rxjs.umd.min.js"></script>
+    <style>
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+        }
+        .filter-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .search-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        .search-input {
+            font-size: 1.1rem;
+            padding: 0.75rem;
+        }
+        .features-demo {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 2rem;
+        }
+        .operator-badge {
+            font-size: 0.8rem;
+            margin: 0.2rem;
+        }
+        tr.filtered-out {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="btn btn-outline-secondary back-link">← Back to Home</a>
+    
+    <div class="container">
+        <div class="filter-header text-center">
+            <h1>🔍 RxJS Reactive Filter</h1>
+            <p class="mb-0">Demonstrating reactive programming with RxJS operators</p>
+        </div>
+
+        <div class="alert alert-info">
+            <h5>🚀 RxJS Features Demonstrated:</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="mb-0">
+                        <li><strong>fromEvent:</strong> Observable from DOM events</li>
+                        <li><strong>debounceTime:</strong> Delay rapid inputs</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="mb-0">
+                        <li><strong>map:</strong> Transform event data</li>
+                        <li><strong>distinctUntilChanged:</strong> Prevent duplicate filtering</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <h4>Search JavaScript Concepts</h4>
+            <div class="input-group">
+                <span class="input-group-text">🔍</span>
+                <input type="text" 
+                       id="search" 
+                       class="form-control search-input" 
+                       placeholder="Type to filter the table below (try: 'javascript', 'array', 'function')...">
+            </div>
+            <div class="mt-2">
+                <small class="text-muted">
+                    Active operators: 
+                    <span class="badge bg-primary operator-badge">debounceTime(300ms)</span>
+                    <span class="badge bg-success operator-badge">map(toLowerCase)</span>
+                    <span class="badge bg-warning operator-badge">distinctUntilChanged</span>
+                </small>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="infoTable" class="table table-striped table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Concept</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Difficulty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>WeakMap</td>
+                        <td>A collection of key-value pairs where keys are objects and can be garbage collected</td>
+                        <td>Data Structures</td>
+                        <td>Advanced</td>
+                    </tr>
+                    <tr>
+                        <td>Type Guards</td>
+                        <td>Functions that perform runtime checks to narrow down types</td>
+                        <td>Type Safety</td>
+                        <td>Intermediate</td>
+                    </tr>
+                    <tr>
+                        <td>Proxy</td>
+                        <td>Allows you to intercept and customize operations performed on objects</td>
+                        <td>Meta Programming</td>
+                        <td>Advanced</td>
+                    </tr>
+                    <tr>
+                        <td>Reflect</td>
+                        <td>Provides methods for interceptable JavaScript operations</td>
+                        <td>Meta Programming</td>
+                        <td>Advanced</td>
+                    </tr>
+                    <tr>
+                        <td>Set</td>
+                        <td>A collection of unique values of any type</td>
+                        <td>Data Structures</td>
+                        <td>Beginner</td>
+                    </tr>
+                    <tr>
+                        <td>Symbol</td>
+                        <td>A primitive data type used to create unique identifiers</td>
+                        <td>Primitives</td>
+                        <td>Intermediate</td>
+                    </tr>
+                    <tr>
+                        <td>Generators</td>
+                        <td>Functions that can be paused and resumed, yielding multiple values</td>
+                        <td>Functions</td>
+                        <td>Advanced</td>
+                    </tr>
+                    <tr>
+                        <td>Iterators</td>
+                        <td>Objects that define a sequence and potentially a return value</td>
+                        <td>Iteration</td>
+                        <td>Intermediate</td>
+                    </tr>
+                    <tr>
+                        <td>Arrow Functions</td>
+                        <td>A shorter syntax for writing function expressions</td>
+                        <td>Functions</td>
+                        <td>Beginner</td>
+                    </tr>
+                    <tr>
+                        <td>Destructuring</td>
+                        <td>Extract values from arrays or properties from objects</td>
+                        <td>Syntax</td>
+                        <td>Beginner</td>
+                    </tr>
+                    <tr>
+                        <td>Promises</td>
+                        <td>Objects representing the eventual completion of an asynchronous operation</td>
+                        <td>Async</td>
+                        <td>Intermediate</td>
+                    </tr>
+                    <tr>
+                        <td>Async/Await</td>
+                        <td>Syntactic sugar for working with promises in a synchronous manner</td>
+                        <td>Async</td>
+                        <td>Intermediate</td>
+                    </tr>
+                    <tr>
+                        <td>Modules</td>
+                        <td>A way to organize and encapsulate code in separate files</td>
+                        <td>Organization</td>
+                        <td>Intermediate</td>
+                    </tr>
+                    <tr>
+                        <td>Classes</td>
+                        <td>Template for creating objects with shared properties and methods</td>
+                        <td>OOP</td>
+                        <td>Intermediate</td>
+                    </tr>
+                    <tr>
+                        <td>Closures</td>
+                        <td>Functions that have access to variables in their outer scope</td>
+                        <td>Scope</td>
+                        <td>Advanced</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="features-demo">
+            <h5>RxJS Implementation Details:</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Observable Chain:</h6>
+                    <code>
+                        fromEvent(input, 'input')<br>
+                        .pipe(<br>
+                        &nbsp;&nbsp;map(e => e.target.value.toLowerCase()),<br>
+                        &nbsp;&nbsp;debounceTime(300),<br>
+                        &nbsp;&nbsp;distinctUntilChanged()<br>
+                        )<br>
+                        .subscribe(filterRows)
+                    </code>
+                </div>
+                <div class="col-md-6">
+                    <h6>Benefits:</h6>
+                    <ul>
+                        <li>Debounced search (300ms delay)</li>
+                        <li>Case-insensitive filtering</li>
+                        <li>Prevents duplicate API calls</li>
+                        <li>Reactive and declarative</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // RxJS Filter Implementation
+        const { fromEvent } = rxjs;
+        const { debounceTime, map, distinctUntilChanged } = rxjs.operators;
+
+        // Get elements
+        const input = document.getElementById('search');
+        const rows = document.querySelectorAll('#infoTable tbody tr');
+
+        // Filter function
+        function filterRows(value) {
+            let visibleCount = 0;
+            rows.forEach(row => {
+                const text = (row.textContent?.toLowerCase()) || '';
+                const isVisible = text.includes(value);
+                row.style.display = isVisible ? '' : 'none';
+                if (isVisible) visibleCount++;
+            });
+
+            // Update search info
+            updateSearchInfo(value, visibleCount);
+        }
+
+        // Update search information
+        function updateSearchInfo(searchTerm, resultCount) {
+            let infoDiv = document.getElementById('search-info');
+            if (!infoDiv) {
+                infoDiv = document.createElement('div');
+                infoDiv.id = 'search-info';
+                infoDiv.className = 'mt-2 text-muted small';
+                input.parentNode.parentNode.appendChild(infoDiv);
+            }
+
+            if (searchTerm) {
+                infoDiv.innerHTML = `
+                    <i class="bi bi-info-circle"></i> 
+                    Showing ${resultCount} results for "${searchTerm}"
+                    ${resultCount === 0 ? ' - Try different keywords!' : ''}
+                `;
+            } else {
+                infoDiv.innerHTML = `<i class="bi bi-table"></i> Showing all ${rows.length} JavaScript concepts`;
+            }
+        }
+
+        // Create RxJS observable chain
+        if (input) {
+            fromEvent(input, 'input')
+                .pipe(
+                    map(e => e.target.value.toLowerCase()),
+                    debounceTime(300),
+                    distinctUntilChanged()
+                )
+                .subscribe(filterRows);
+
+            // Initialize with empty search
+            filterRows('');
+        } else {
+            console.error('Search input not found.');
+        }
+
+        // Add some visual feedback for the reactive nature
+        input.addEventListener('input', () => {
+            input.style.backgroundColor = '#fff3cd';
+            setTimeout(() => {
+                input.style.backgroundColor = '';
+            }, 300);
+        });
+    </script>
+</body>
+</html>

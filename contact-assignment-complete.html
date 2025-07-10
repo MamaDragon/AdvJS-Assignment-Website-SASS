@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Assignment - WeakMap, Type Guards, Proxy</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+    }
+    .alert {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="btn btn-outline-secondary mb-3">← Back to Home</a>
+    
+    <h1 class="mb-4">Contact Form Assignment</h1>
+    <p class="text-muted">This form demonstrates WeakMap, Type Guards, and Proxy features</p>
+    
+    <form id="myForm" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phone" placeholder="1234567890" required>
+        <div class="form-text">Enter 10 digits only</div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="email" placeholder="user@example.com" required>
+        <div class="form-text">Enter a valid email address</div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="zip" class="form-label">ZIP Code</label>
+        <input type="text" class="form-control" id="zip" placeholder="12345" required>
+        <div class="form-text">Enter 5 digits only</div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    <!-- Response area for messages -->
+    <div id="response"></div>
+    
+    <div class="mt-5">
+      <h5>Assignment Features Demonstrated:</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <strong>WeakMap:</strong> Tracks form validation status privately
+        </li>
+        <li class="list-group-item">
+          <strong>Type Guards:</strong> Ensures DOM elements are correct types
+        </li>
+        <li class="list-group-item">
+          <strong>Proxy with Reflect:</strong> Logs all property access to inputs object
+        </li>
+        <li class="list-group-item">
+          <strong>Validation:</strong> Phone (10 digits), Email (valid format), ZIP (5 digits)
+        </li>
+        <li class="list-group-item">
+          <strong>Data Persistence:</strong> Saves to contacts.json file and localStorage with optional download
+        </li>
+      </ul>
+    </div>
+    
+    <div class="mt-3">
+      <p class="text-info">
+        <strong>Check the browser console</strong> to see Proxy logging in action when you submit the form!
+      </p>
+    </div>
+    
+    <!-- Saved submissions section -->
+    <div class="mt-4">
+      <h5>Manage Contact Data</h5>
+      <div class="row">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-outline-info btn-sm" onclick="showSavedSubmissions()">
+            View Saved Data
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button type="button" class="btn btn-outline-success btn-sm" onclick="downloadContactsFile()">
+            Download contacts.json
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button type="button" class="btn btn-outline-warning btn-sm" onclick="downloadAllSubmissions()">
+            Download All Individual
+          </button>
+        </div>
+      </div>
+      <div id="savedSubmissions" class="mt-3"></div>
+    </div>
+  </div>
+  
+  <!-- Load the JavaScript -->
+  <script src="contact-assignment-complete.js"></script>
+</body>
+</html>

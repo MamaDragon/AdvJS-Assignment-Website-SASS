@@ -1,0 +1,22 @@
+{
+  "testEnvironment": "jsdom",
+  "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
+  "testMatch": [
+    "<rootDir>/tests/**/*.test.js"
+  ],
+  "collectCoverageFrom": [
+    "*.js",
+    "!node_modules/**",
+    "!docs/**",
+    "!tests/**",
+    "!jest.config.js",
+    "!run-tests.sh"
+  ],
+  "coverageDirectory": "coverage",
+  "coverageReporters": [
+    "text",
+    "lcov",
+    "html"
+  ],
+  "testTimeout": 10000
+}
