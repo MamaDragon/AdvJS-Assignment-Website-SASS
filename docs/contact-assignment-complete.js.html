@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: contact-assignment-complete.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: contact-assignment-complete.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Contact Assignment - WeakMap, Type Guards, and Proxy Implementation
+ * Demonstrates advanced JavaScript features for form validation and data handling
+ * @author Advanced JavaScript Assignment
+ * @version 1.0.0
+ */
+
+/**
+ * Contact Assignment - WeakMap, Type Guards, and Proxy Implementation
+ * Demonstrates advanced JavaScript features for form validation and data handling
+ * @namespace ContactModule
+ */
+var __awaiter = (this &amp;&amp; this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+// === WeakMap to store validation status privately ===
+/** @type {WeakMap&lt;HTMLFormElement, FormValidationMeta>} */
+const formMeta = new WeakMap();
+
+// === Type guards for form and input elements ===
+/**
+ * Type guard to check if an element is an HTMLFormElement
+ * @param {Element | null} el - The element to check
+ * @returns {boolean} True if element is a form
+ */
+function isForm(el) {
+    return el instanceof HTMLFormElement;
+}
+
+/**
+ * Type guard to check if an element is an HTMLInputElement
+ * @param {Element | null} el - The element to check
+ * @returns {boolean} True if element is an input
+ */
+function isInput(el) {
+    return el instanceof HTMLInputElement;
+}
+// === Utility to safely get trimmed input values ===
+/**
+ * Safely retrieves and trims the value from an input element
+ * @param {string} id - The ID of the input element
+ * @returns {string} The trimmed value from the input
+ * @throws {Error} If the element is not found or not an input
+ */
+function getInputValue(id) {
+    const el = document.getElementById(id);
+    if (!isInput(el))
+        throw new Error(`Invalid input: ${id}`);
+    return el.value.trim();
+}
+
+// === Proxy wrapper to log property access ===
+/**
+ * Creates a proxy wrapper around an object to log property access and modifications
+ * @param {Object} obj - The object to wrap with a proxy
+ * @returns {Object} A proxy of the original object with logging capabilities
+ */
+function createFormProxy(obj) {
+    return new Proxy(obj, {
+        get(target, prop) {
+            const value = Reflect.get(target, prop);
+            console.log(`Accessed ${String(prop)}:`, value);
+            return value;
+        },
+        set(target, prop, value) {
+            console.log(`Set ${String(prop)} = ${value}`);
+            return Reflect.set(target, prop, value);
+        }
+    });
+}
+// === DOM ready logic ===
+document.addEventListener('DOMContentLoaded', () => {
+    // === Grab the form and result message area ===
+    const form = document.getElementById('myForm');
+    const responseDiv = document.getElementById('response');
+    // === Confirm the form and response div are found ===
+    if (!isForm(form) || !responseDiv) {
+        console.error('Missing form or response div');
+        return;
+    }
+    // === Set up the submit event handler ===
+    form.addEventListener('submit', (e) => __awaiter(this, void 0, void 0, function* () {
+        e.preventDefault();
+        // === Store "not validated" in the WeakMap for this form ===
+        formMeta.set(form, { validated: false });
+        // === Wrap the user input data in a Proxy ===
+        const inputs = createFormProxy({
+            phone: getInputValue('phone'),
+            email: getInputValue('email'),
+            zip: getInputValue('zip')
+        });
+        // === Run validation on inputs ===
+        const errors = [];
+        if (!/^\d{10}$/.test(inputs.phone))
+            errors.push('Phone must be 10 digits.');
+        if (!/^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/.test(inputs.email))
+            errors.push('Invalid email format.');
+        if (!/^\d{5}$/.test(inputs.zip))
+            errors.push('Zip must be 5 digits.');
+        // === Store validation result in WeakMap ===
+        formMeta.set(form, { validated: errors.length === 0 });
+        // === If there are errors, display them and stop ===
+        if (errors.length > 0) {
+            responseDiv.innerHTML = `&lt;div class="alert alert-danger">${errors.join('&lt;br>')}&lt;/div>`;
+            return;
+        }
+        // === Submit the data if it's valid ===
+        try {
+            const res = yield fetch('/submit-contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(inputs)
+            });
+            // === Display success or failure message ===
+            const result = yield res.json();
+            responseDiv.innerHTML = `&lt;div class="alert alert-success">${result.message || 'Success!'}&lt;/div>`;
+        }
+        catch (err) {
+            console.error(err);
+            responseDiv.innerHTML = `&lt;div class="alert alert-danger">Submission failed. Try again.&lt;/div>`;
+        }
+    }));
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="AdminModule.html">AdminModule</a></li><li><a href="ContactModule.html">ContactModule</a></li><li><a href="FilterModule.html">FilterModule</a></li><li><a href="QuizModule.html">QuizModule</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createFormProxy">createFormProxy</a></li><li><a href="global.html#filterRows">filterRows</a></li><li><a href="global.html#formMeta">formMeta</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#input">input</a></li><li><a href="global.html#isForm">isForm</a></li><li><a href="global.html#isInput">isInput</a></li><li><a href="global.html#loadQuizData">loadQuizData</a></li><li><a href="global.html#rows">rows</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Jul 10 2025 11:10:45 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

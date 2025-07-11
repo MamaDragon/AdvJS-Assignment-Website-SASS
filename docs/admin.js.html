@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: admin.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: admin.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Admin module for managing quiz questions
+ * Provides functionality to view, edit, delete, and add quiz questions
+ * @author Advanced JavaScript Assignment
+ * @version 1.0.0
+ */
+
+/**
+ * Admin module for managing quiz questions
+ * @namespace AdminModule
+ */
+var AdminModule;
+(function (AdminModule) {
+    /** @type {QuizQuestion[]} */
+    let quizData = [];
+    // Load quiz data from API
+    /**
+     * Loads quiz data from the API endpoint
+     * @async
+     * @function loadQuizData
+     * @returns {Promise&lt;void>}
+     */
+    fetch('/api/quiz')
+        .then(res => res.json())
+        .then((data) => {
+        quizData = data;
+        renderQuizAdmin();
+    })
+        .catch(err => {
+        console.error('Failed to load quiz:', err);
+    });
+    /**
+     * Renders the quiz administration interface.
+     * Creates editable input fields for questions, choices, and answers,
+     * along with delete buttons for each question and a save all button.
+     * @returns {void}
+     */
+    function renderQuizAdmin() {
+        const listDiv = document.getElementById('quiz-admin-list');
+        if (!listDiv)
+            return;
+        listDiv.innerHTML = '';
+        quizData.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'border p-3 mb-3';
+            // Editable Question
+            const questionInput = document.createElement('input');
+            questionInput.type = 'text';
+            questionInput.className = 'form-control mb-2';
+            questionInput.value = q.question;
+            questionInput.oninput = () => {
+                quizData[index].question = questionInput.value;
+            };
+            div.appendChild(questionInput);
+            // Editable Choices
+            const choicesInput = document.createElement('input');
+            choicesInput.type = 'text';
+            choicesInput.className = 'form-control mb-2';
+            choicesInput.value = q.choices.join(', ');
+            choicesInput.oninput = () => {
+                quizData[index].choices = choicesInput.value
+                    .split(',')
+                    .map(c => c.trim())
+                    .filter(c => c);
+            };
+            div.appendChild(choicesInput);
+            // Editable Answer
+            const answerInput = document.createElement('input');
+            answerInput.type = 'text';
+            answerInput.className = 'form-control mb-2';
+            answerInput.value = q.answer;
+            answerInput.oninput = () => {
+                quizData[index].answer = answerInput.value.trim();
+            };
+            div.appendChild(answerInput);
+            // Delete Button
+            const delBtn = document.createElement('button');
+            delBtn.className = 'btn btn-danger btn-sm';
+            delBtn.textContent = 'Delete';
+            delBtn.onclick = () => {
+                quizData.splice(index, 1);
+                renderQuizAdmin();
+            };
+            div.appendChild(delBtn);
+            listDiv.appendChild(div);
+        });
+        // Save All Button
+        const saveBtn = document.createElement('button');
+        saveBtn.textContent = 'Save All Changes';
+        saveBtn.className = 'btn btn-primary mt-3';
+        saveBtn.onclick = () => {
+            fetch('/api/quiz', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(quizData)
+            })
+                .then(res => res.json())
+                .then(data => {
+                alert(data.message || 'Saved!');
+            })
+                .catch(err => {
+                console.error('Save failed:', err);
+                alert('Failed to save changes.');
+            });
+        };
+        listDiv.appendChild(saveBtn);
+    }
+    /**
+     * Gets the form element for adding new questions and sets up event listener.
+     * Handles form submission to add new quiz questions to the data array.
+     */
+    const addForm = document.getElementById('add-question-form');
+    /**
+     * Event handler for adding new quiz questions.
+     * Validates form input and adds new question to the quiz data.
+     * @param {Event} e - The form submit event
+     * @returns {void}
+     */
+    addForm === null || addForm === void 0 ? void 0 : addForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const questionInput = document.getElementById('new-question');
+        const choicesInputEl = document.getElementById('new-choices');
+        const answerInput = document.getElementById('new-answer');
+        const question = (questionInput === null || questionInput === void 0 ? void 0 : questionInput.value.trim()) || '';
+        const choicesRaw = (choicesInputEl === null || choicesInputEl === void 0 ? void 0 : choicesInputEl.value.trim()) || '';
+        const answer = (answerInput === null || answerInput === void 0 ? void 0 : answerInput.value.trim()) || '';
+        const choices = choicesRaw.split(',').map(c => c.trim()).filter(c => c);
+        if (!question || choices.length &lt; 2 || !answer) {
+            alert('Please enter a question, at least 2 choices, and an answer.');
+            return;
+        }
+        quizData.push({ question, choices, answer });
+        renderQuizAdmin();
+        if (addForm &amp;&amp; addForm instanceof HTMLFormElement) {
+            addForm.reset();
+        }
+    });
+})(AdminModule || (AdminModule = {})); // End AdminModule namespace
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="AdminModule.html">AdminModule</a></li><li><a href="ContactModule.html">ContactModule</a></li><li><a href="FilterModule.html">FilterModule</a></li><li><a href="QuizModule.html">QuizModule</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createFormProxy">createFormProxy</a></li><li><a href="global.html#filterRows">filterRows</a></li><li><a href="global.html#formMeta">formMeta</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#input">input</a></li><li><a href="global.html#isForm">isForm</a></li><li><a href="global.html#isInput">isInput</a></li><li><a href="global.html#loadQuizData">loadQuizData</a></li><li><a href="global.html#rows">rows</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Jul 10 2025 11:10:45 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

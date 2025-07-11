@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>  
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        
+        body {
+            padding-top: 80px; /* Add buffer to prevent content overlap */
+        }
+    </style>
+</head>
+
+<body>
+
+<a href="../index.html" class="btn btn-outline-secondary back-link">← Back to Home</a>
+
+<div id="main">
+
+    <!-- <h1 class="page-title">Home</h1> -->
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Advanced JavaScript Assignment Website</h1>
+<p>This project demonstrates advanced JavaScript features including WeakMap, Type Guards, Proxy with Reflect, Set, Symbol, Generators, and Iterators.</p>
+<h2>Features</h2>
+<h3>Contact Form (<code>contact-assignment-complete.js</code>)</h3>
+<ul>
+<li><strong>WeakMap</strong>: Used for storing private form validation metadata</li>
+<li><strong>Type Guards</strong>: Ensures type safety for form and input elements</li>
+<li><strong>Proxy with Reflect</strong>: Logs property access and modifications for debugging</li>
+<li><strong>Form Validation</strong>: Advanced validation with custom error handling</li>
+</ul>
+<h3>Admin Module (<code>admin.js</code>)</h3>
+<ul>
+<li>Quiz question management functionality</li>
+<li>Dynamic DOM manipulation</li>
+<li>Data persistence and retrieval</li>
+</ul>
+<h3>Filter Module (<code>filter.js</code>)</h3>
+<ul>
+<li>RxJS-based search functionality</li>
+<li>Debounced input handling</li>
+<li>Real-time table row filtering</li>
+</ul>
+<h3>Quiz Module (<code>quizquestions.js</code>)</h3>
+<ul>
+<li>Dynamic quiz rendering</li>
+<li>Interactive question interface</li>
+<li>Multiple choice handling</li>
+</ul>
+<h2>API Documentation</h2>
+<p>The complete API documentation is generated using JSDoc and can be found in the <code>docs/</code> directory.</p>
+<h2>Installation</h2>
+<pre class="prettyprint source lang-bash"><code>npm install
+</code></pre>
+<h2>Generate Documentation</h2>
+<pre class="prettyprint source lang-bash"><code>npm run docs
+</code></pre>
+<h2>Serve Documentation</h2>
+<pre class="prettyprint source lang-bash"><code>npm run docs:serve
+</code></pre>
+<h2>Build and Serve (Combined)</h2>
+<pre class="prettyprint source lang-bash"><code>npm run build-docs
+</code></pre>
+<h2>Project Structure</h2>
+<pre class="prettyprint source"><code>├── index.html                     # Main entry point
+├── contact-assignment-complete.html
+├── contact-assignment-complete.js # WeakMap, Type Guards, Proxy implementation
+├── admin.js                       # Admin module for quiz management
+├── filter.js                      # RxJS-based filtering
+├── quizquestions.js               # Quiz display module
+├── package.json                   # Node.js dependencies
+├── jsdoc.json                     # JSDoc configuration
+└── docs/                          # Generated documentation
+</code></pre></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>admin.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Admin module for managing quiz questions
+Provides functionality to view, edit, delete, and add quiz questions</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Advanced JavaScript Assignment</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="admin.js.html">admin.js</a>, <a href="admin.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>contact-assignment-complete.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Contact Assignment - WeakMap, Type Guards, and Proxy Implementation
+Demonstrates advanced JavaScript features for form validation and data handling</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Advanced JavaScript Assignment</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="contact-assignment-complete.js.html">contact-assignment-complete.js</a>, <a href="contact-assignment-complete.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>filter.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Search filter module using RxJS for table row filtering.
+Implements debounced search functionality with case-insensitive matching.</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Advanced JavaScript Assignment</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="filter.js.html">filter.js</a>, <a href="filter.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:rxjs</li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>quizquestions.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Quiz module for displaying quiz questions
+Handles quiz rendering, user interaction, and scoring</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Advanced JavaScript Assignment</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="quizquestions.js.html">quizquestions.js</a>, <a href="quizquestions.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>types.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Type definitions for the Advanced JavaScript Assignment</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Your Name</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="types.js.html">types.js</a>, <a href="types.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="AdminModule.html">AdminModule</a></li><li><a href="ContactModule.html">ContactModule</a></li><li><a href="FilterModule.html">FilterModule</a></li><li><a href="QuizModule.html">QuizModule</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createFormProxy">createFormProxy</a></li><li><a href="global.html#filterRows">filterRows</a></li><li><a href="global.html#formMeta">formMeta</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#input">input</a></li><li><a href="global.html#isForm">isForm</a></li><li><a href="global.html#isInput">isInput</a></li><li><a href="global.html#loadQuizData">loadQuizData</a></li><li><a href="global.html#rows">rows</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Jul 10 2025 11:10:45 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

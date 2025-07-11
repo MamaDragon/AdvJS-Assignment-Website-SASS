@@ -58,7 +58,7 @@ pids
 .yarn-integrity
 
 # Documentation build (can be regenerated)
-docs/
+# docs/
 
 # Temporary files
 *.tmp

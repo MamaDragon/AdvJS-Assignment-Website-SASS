@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: quizquestions.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: quizquestions.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Quiz module for displaying quiz questions
+ * Handles quiz rendering, user interaction, and scoring
+ * @author Advanced JavaScript Assignment
+ * @version 1.0.0
+ */
+
+/**
+ * Quiz module for displaying quiz questions
+ * @namespace QuizModule
+ */
+var QuizModule;
+(function (QuizModule) {
+    /** @type {QuizQuestion[]} */
+    let quizData = [];
+    
+    /**
+     * Loads quiz data from the API endpoint
+     * @async
+     * @function loadQuizData
+     * @returns {Promise&lt;void>}
+     */
+    fetch('/api/quiz')
+        .then(res => res.json())
+        .then((data) => {
+        quizData = data;
+        renderQuiz(data);
+    })
+        .catch(err => {
+        console.error('Error loading quiz:', err);
+    });
+    /**
+     * Renders the quiz interface with questions and multiple choice options.
+     * Creates radio buttons for each choice and adds a submit button.
+     * @param {QuizQuestion[]} data - Array of quiz questions to render
+     * @returns {void}
+     */
+    function renderQuiz(data) {
+        const container = document.getElementById('quiz');
+        if (!container)
+            return;
+        container.innerHTML = ''; // Clear previous content
+        data.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('mb-4');
+            const question = document.createElement('h5');
+            question.textContent = `${index + 1}. ${q.question}`;
+            questionDiv.appendChild(question);
+            q.choices.forEach(choice => {
+                const wrapper = document.createElement('div');
+                wrapper.classList.add('form-check');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `question-${index}`;
+                input.value = choice;
+                input.classList.add('form-check-input');
+                input.id = `q${index}-${choice}`;
+                const label = document.createElement('label');
+                label.classList.add('form-check-label');
+                label.setAttribute('for', input.id);
+                label.textContent = choice;
+                wrapper.appendChild(input);
+                wrapper.appendChild(label);
+                questionDiv.appendChild(wrapper);
+            });
+            container.appendChild(questionDiv);
+        });
+        const submitBtn = document.createElement('button');
+        submitBtn.textContent = 'Submit Quiz';
+        submitBtn.classList.add('btn', 'btn-primary');
+        submitBtn.onclick = evaluateQuiz;
+        container.appendChild(submitBtn);
+        const resultDiv = document.createElement('div');
+        resultDiv.id = 'result';
+        resultDiv.classList.add('mt-3');
+        container.appendChild(resultDiv);
+    }
+    /**
+     * Evaluates the submitted quiz answers and displays the score.
+     * Compares selected answers with correct answers and shows results.
+     * @returns {void}
+     */
+    function evaluateQuiz() {
+        let score = 0;
+        quizData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+            if (selected &amp;&amp; selected.value === q.answer) {
+                score++;
+            }
+        });
+        const resultDiv = document.getElementById('result');
+        if (resultDiv) {
+            resultDiv.innerHTML = `&lt;h4>Your score: ${score} out of ${quizData.length}&lt;/h4>`;
+        }
+    }
+})(QuizModule || (QuizModule = {})); // End QuizModule namespace
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="AdminModule.html">AdminModule</a></li><li><a href="ContactModule.html">ContactModule</a></li><li><a href="FilterModule.html">FilterModule</a></li><li><a href="QuizModule.html">QuizModule</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createFormProxy">createFormProxy</a></li><li><a href="global.html#filterRows">filterRows</a></li><li><a href="global.html#formMeta">formMeta</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#input">input</a></li><li><a href="global.html#isForm">isForm</a></li><li><a href="global.html#isInput">isInput</a></li><li><a href="global.html#loadQuizData">loadQuizData</a></li><li><a href="global.html#rows">rows</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Jul 10 2025 11:10:45 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
