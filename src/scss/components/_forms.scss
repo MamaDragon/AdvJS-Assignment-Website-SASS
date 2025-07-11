@@ -1,0 +1,123 @@
+// Form Component Styles
+
+.form-container {
+  background: $bg-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $shadow;
+  
+  .form-title {
+    color: $text-primary;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-lg;
+    text-align: center;
+  }
+}
+
+.form-group {
+  margin-bottom: $spacing-lg;
+  
+  label {
+    color: $text-primary;
+    font-weight: $font-weight-normal;
+    margin-bottom: $spacing-sm;
+    display: block;
+  }
+  
+  .form-control {
+    border: 2px solid lighten($secondary-color, 30%);
+    border-radius: $border-radius;
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-base;
+    transition: $transition-base;
+    width: 100%;
+    
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+      outline: none;
+    }
+    
+    &.is-invalid {
+      border-color: $danger-color;
+      
+      &:focus {
+        border-color: $danger-color;
+        box-shadow: 0 0 0 0.2rem rgba($danger-color, 0.25);
+      }
+    }
+    
+    &.is-valid {
+      border-color: $success-color;
+      
+      &:focus {
+        border-color: $success-color;
+        box-shadow: 0 0 0 0.2rem rgba($success-color, 0.25);
+      }
+    }
+  }
+  
+  textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+.invalid-feedback {
+  color: $danger-color;
+  font-size: $font-size-sm;
+  margin-top: $spacing-xs;
+  display: block;
+}
+
+.valid-feedback {
+  color: $success-color;
+  font-size: $font-size-sm;
+  margin-top: $spacing-xs;
+  display: block;
+}
+
+// Button styles
+.btn {
+  border-radius: $border-radius;
+  padding: $spacing-sm $spacing-lg;
+  font-weight: $font-weight-normal;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  transition: $transition-base;
+  
+  &.btn-primary {
+    @include button-variant($primary-color);
+  }
+  
+  &.btn-secondary {
+    @include button-variant($secondary-color);
+  }
+  
+  &.btn-success {
+    @include button-variant($success-color);
+  }
+  
+  &.btn-danger {
+    @include button-variant($danger-color);
+  }
+  
+  &.btn-warning {
+    @include button-variant($warning-color, $text-primary);
+  }
+  
+  &.btn-info {
+    @include button-variant($info-color);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    
+    &:hover {
+      transform: none;
+    }
+  }
+}

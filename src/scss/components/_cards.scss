@@ -1,0 +1,56 @@
+// Feature Card Component Styles
+
+.feature-card {
+  @include card-hover-effect();
+  border: none;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  
+  .card-body {
+    padding: $spacing-lg;
+  }
+  
+  .card-title {
+    color: $text-primary;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-lg;
+  }
+  
+  .card-text {
+    color: $text-secondary;
+    line-height: $line-height-base;
+    margin-bottom: $spacing-lg;
+  }
+  
+  .btn {
+    margin-top: auto;
+    @include button-variant($primary-color);
+    border-radius: $border-radius;
+    padding: $spacing-sm $spacing-lg;
+    font-weight: $font-weight-normal;
+    text-decoration: none;
+    display: inline-block;
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+    }
+  }
+  
+  // Different card variants
+  &.card-primary {
+    border-top: 4px solid $primary-color;
+  }
+  
+  &.card-success {
+    border-top: 4px solid $success-color;
+  }
+  
+  &.card-info {
+    border-top: 4px solid $info-color;
+  }
+  
+  &.card-warning {
+    border-top: 4px solid $warning-color;
+  }
+}

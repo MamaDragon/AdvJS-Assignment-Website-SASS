@@ -1,0 +1,142 @@
+// SASS Mixins for Advanced JavaScript Assignment Website
+
+// Media query mixin
+@mixin media-query($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: #{$breakpoint-sm}) { @content; }
+  }
+  @else if $breakpoint == md {
+    @media (min-width: #{$breakpoint-md}) { @content; }
+  }
+  @else if $breakpoint == lg {
+    @media (min-width: #{$breakpoint-lg}) { @content; }
+  }
+  @else if $breakpoint == xl {
+    @media (min-width: #{$breakpoint-xl}) { @content; }
+  }
+  @else if $breakpoint == xxl {
+    @media (min-width: #{$breakpoint-xxl}) { @content; }
+  }
+}
+
+// Card hover effect
+@mixin card-hover-effect($transform: translateY(-5px), $shadow: $shadow-lg) {
+  transition: $transition-base;
+  cursor: pointer;
+  
+  &:hover {
+    transform: $transform;
+    box-shadow: $shadow;
+  }
+}
+
+// Button mixin
+@mixin button-variant($bg-color, $text-color: white, $hover-darken: 10%) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: 1px solid $bg-color;
+  transition: $transition-base;
+  
+  &:hover {
+    background-color: darken($bg-color, $hover-darken);
+    border-color: darken($bg-color, $hover-darken);
+    color: $text-color;
+  }
+}
+
+// Flexbox center mixin
+@mixin flex-center($direction: row) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+// Text truncation
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Border left accent
+@mixin border-left-accent($color: $primary-color, $width: 4px) {
+  border-left: $width solid $color;
+  padding-left: $spacing-md;
+}
+
+// Gradient background
+@mixin gradient-bg($start-color, $end-color, $direction: to bottom) {
+  background: linear-gradient($direction, $start-color, $end-color);
+}
+
+// Clearfix for floated elements
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Animation keyframes helper
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+// Transform mixin
+@mixin transform($transforms) {
+  -webkit-transform: $transforms;
+  -moz-transform: $transforms;
+  -ms-transform: $transforms;
+  transform: $transforms;
+}
+
+// Transition mixin
+@mixin transition($transitions...) {
+  -webkit-transition: $transitions;
+  -moz-transition: $transitions;
+  -ms-transition: $transitions;
+  transition: $transitions;
+}
+
+// Color utility functions
+@function lighten-color($color, $amount: 10%) {
+  @return lighten($color, $amount);
+}
+
+@function darken-color($color, $amount: 10%) {
+  @return darken($color, $amount);
+}
+
+@function alpha-color($color, $alpha: 0.8) {
+  @return rgba($color, $alpha);
+}
+
+// Gradient mixin
+@mixin gradient($start-color, $end-color, $direction: to bottom) {
+  background: linear-gradient($direction, $start-color, $end-color);
+}
+
+// Button variant mixin
+@mixin button-variant($bg-color, $text-color: white) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: 1px solid $bg-color;
+  transition: $transition-base;
+  
+  &:hover {
+    background-color: darken($bg-color, 10%);
+    border-color: darken($bg-color, 10%);
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}

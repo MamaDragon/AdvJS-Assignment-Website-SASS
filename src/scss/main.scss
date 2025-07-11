@@ -1,0 +1,114 @@
+// Main SASS file for Advanced JavaScript Assignment Website
+// This file imports all the component and page styles
+
+// Import variables and mixins first
+@import 'variables';
+@import 'mixins';
+
+// Import component styles
+@import 'components/cards';
+@import 'components/code-features';
+@import 'components/forms';
+
+// Import page-specific styles
+@import 'pages/home';
+@import 'pages/quiz';
+
+// Global base styles
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: $line-height-base;
+  color: $text-primary;
+  background-color: $bg-white;
+}
+
+.container {
+  padding-top: $spacing-xxl;
+  padding-bottom: $spacing-xxl;
+}
+
+// Utility classes
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mb-1 { margin-bottom: $spacing-xs; }
+.mb-2 { margin-bottom: $spacing-sm; }
+.mb-3 { margin-bottom: $spacing-md; }
+.mb-4 { margin-bottom: $spacing-lg; }
+.mb-5 { margin-bottom: $spacing-xl; }
+
+.mt-1 { margin-top: $spacing-xs; }
+.mt-2 { margin-top: $spacing-sm; }
+.mt-3 { margin-top: $spacing-md; }
+.mt-4 { margin-top: $spacing-lg; }
+.mt-5 { margin-top: $spacing-xl; }
+
+.p-1 { padding: $spacing-xs; }
+.p-2 { padding: $spacing-sm; }
+.p-3 { padding: $spacing-md; }
+.p-4 { padding: $spacing-lg; }
+.p-5 { padding: $spacing-xl; }
+
+// Responsive helpers
+.d-none {
+  display: none;
+}
+
+@include media-query(sm) {
+  .d-sm-block { display: block; }
+  .d-sm-none { display: none; }
+}
+
+@include media-query(md) {
+  .d-md-block { display: block; }
+  .d-md-none { display: none; }
+}
+
+@include media-query(lg) {
+  .d-lg-block { display: block; }
+  .d-lg-none { display: none; }
+}
+
+// Animation classes
+.fade-in {
+  @include keyframes(fadeIn) {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  animation: fadeIn 0.5s ease-in;
+}
+
+.slide-up {
+  @include keyframes(slideUp) {
+    from { 
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  animation: slideUp 0.6s ease-out;
+}
+
+// Print styles
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    color: black !important;
+    background: white !important;
+  }
+}

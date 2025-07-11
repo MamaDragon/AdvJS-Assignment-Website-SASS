@@ -1,0 +1,60 @@
+// Home Page Styles
+
+.home-page {
+  .hero-section {
+    text-align: center;
+    margin-bottom: $spacing-xxl;
+    
+    .display-4 {
+      color: $text-primary;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-md;
+    }
+    
+    .lead {
+      color: $text-secondary;
+      font-size: $font-size-lg;
+      line-height: $line-height-lg;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+  
+  .features-grid {
+    .row {
+      margin-bottom: $spacing-xl;
+    }
+    
+    .col-md-6 {
+      margin-bottom: $spacing-lg;
+      
+      @include media-query(md) {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  .navigation-section {
+    background: $bg-light;
+    padding: $spacing-xl 0;
+    margin-top: $spacing-xxl;
+    border-radius: $border-radius-xl;
+    
+    .section-title {
+      text-align: center;
+      color: $text-primary;
+      margin-bottom: $spacing-lg;
+      font-weight: $font-weight-bold;
+    }
+    
+    .nav-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: $spacing-lg;
+      
+      @include media-query(lg) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+}

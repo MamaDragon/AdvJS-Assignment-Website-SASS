@@ -1,0 +1,160 @@
+// Quiz Page Styles
+
+.quiz-page {
+  .quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+    
+    .quiz-header {
+      text-align: center;
+      margin-bottom: $spacing-xl;
+      
+      h1 {
+        color: $text-primary;
+        margin-bottom: $spacing-md;
+      }
+      
+      .quiz-description {
+        color: $text-secondary;
+        font-size: $font-size-lg;
+      }
+    }
+    
+    .quiz-progress {
+      background: $bg-light;
+      border-radius: $border-radius-xl;
+      padding: $spacing-sm;
+      margin-bottom: $spacing-xl;
+      
+      .progress-bar {
+        background: $primary-color;
+        height: 8px;
+        border-radius: $border-radius;
+        transition: $transition-base;
+      }
+      
+      .progress-text {
+        text-align: center;
+        margin-top: $spacing-sm;
+        color: $text-secondary;
+        font-size: $font-size-sm;
+      }
+    }
+    
+    .question-card {
+      background: $bg-white;
+      border-radius: $border-radius-lg;
+      padding: $spacing-xl;
+      margin-bottom: $spacing-lg;
+      box-shadow: $shadow;
+      
+      .question-number {
+        color: $primary-color;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-sm;
+        margin-bottom: $spacing-sm;
+      }
+      
+      .question-text {
+        color: $text-primary;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        margin-bottom: $spacing-lg;
+        line-height: $line-height-base;
+      }
+      
+      .answers-container {
+        .answer-option {
+          background: $bg-light;
+          border: 2px solid transparent;
+          border-radius: $border-radius;
+          padding: $spacing-md;
+          margin-bottom: $spacing-sm;
+          cursor: pointer;
+          transition: $transition-base;
+          
+          &:hover {
+            background: lighten($primary-color, 45%);
+            border-color: lighten($primary-color, 20%);
+          }
+          
+          &.selected {
+            background: lighten($primary-color, 40%);
+            border-color: $primary-color;
+          }
+          
+          &.correct {
+            background: lighten($success-color, 40%);
+            border-color: $success-color;
+          }
+          
+          &.incorrect {
+            background: lighten($danger-color, 40%);
+            border-color: $danger-color;
+          }
+          
+          input[type="radio"] {
+            margin-right: $spacing-sm;
+          }
+          
+          label {
+            cursor: pointer;
+            margin: 0;
+            color: $text-primary;
+          }
+        }
+      }
+    }
+    
+    .quiz-navigation {
+      text-align: center;
+      margin-top: $spacing-xl;
+      
+      .btn {
+        margin: 0 $spacing-sm;
+        min-width: 120px;
+      }
+    }
+    
+    .quiz-results {
+      text-align: center;
+      background: $bg-light;
+      border-radius: $border-radius-lg;
+      padding: $spacing-xl;
+      
+      .results-title {
+        color: $text-primary;
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-lg;
+      }
+      
+      .score-display {
+        font-size: 3rem;
+        font-weight: $font-weight-bold;
+        margin-bottom: $spacing-md;
+        
+        &.score-excellent {
+          color: $success-color;
+        }
+        
+        &.score-good {
+          color: $info-color;
+        }
+        
+        &.score-needs-improvement {
+          color: $warning-color;
+        }
+        
+        &.score-poor {
+          color: $danger-color;
+        }
+      }
+      
+      .score-message {
+        color: $text-secondary;
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-lg;
+      }
+    }
+  }
+}

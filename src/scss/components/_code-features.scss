@@ -1,0 +1,46 @@
+// Code Feature Component Styles
+
+.code-feature {
+  @include border-left-accent($primary-color);
+  background: $bg-light;
+  border-radius: $border-radius;
+  margin: $spacing-md 0;
+  padding: $spacing-md;
+  font-family: 'Courier New', monospace;
+  
+  strong {
+    color: $text-primary;
+    font-weight: $font-weight-bold;
+    display: block;
+    margin-bottom: $spacing-sm;
+  }
+  
+  // Feature list styling
+  br + span:before,
+  br + &:before {
+    content: "• ";
+    color: $primary-color;
+    font-weight: $font-weight-bold;
+  }
+  
+  // Alternative styling for different feature types
+  &.code-feature-secondary {
+    @include border-left-accent($secondary-color);
+    background: lighten($secondary-color, 45%);
+  }
+  
+  &.code-feature-success {
+    @include border-left-accent($success-color);
+    background: lighten($success-color, 45%);
+  }
+  
+  &.code-feature-warning {
+    @include border-left-accent($warning-color);
+    background: lighten($warning-color, 40%);
+  }
+  
+  &.code-feature-info {
+    @include border-left-accent($info-color);
+    background: lighten($info-color, 45%);
+  }
+}
